@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid" style="width: 500px;">
+
+    <p style="text-align:center;font-size:200%;font-weight:bold">Update Diagnostics Details</p>
+
+    <form method="POST" action="update_diag_list_action"  style="width: inherit;">
+
+        <div class="container" style="text-align: center; width: inherit;">
+            <input type="hidden" placeholder="Enter new name for the medicine" name='t' value="{{diag_store[0]}}">
+            
+            <label for="name">Enter new Name of the diagnostic</label>
+            <input type="text" placeholder="Enter new name for the medicine" name='t_name' value="{{diag_store[0]}}">
+            
+            <input type="text" placeholder="Enter new price" name="cost" value="{{diag_store[1]}}">
+
+            <input type="submit" class="button" value="update">
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

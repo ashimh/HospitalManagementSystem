@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <p style="text-align:center;font-size:200%;font-weight:bold">View Patients</p>
+    <div style="text-align:center">
+
+    
+        <table id="example" class="table table-bordered" style="text-align:center;">
+
+            <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Address</th>
+                    <th>DOJ</th>
+                    <th>Type of Room</th>
+                
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for key in data %}
+                <tr>
+                    <td>{{key[0]}}</td>
+                    <td>{{key[1]}}</td>
+                    <td>{{key[2]}}</td>
+                    <td>{{key[3]}}</td>
+                    <td>{{key[4]}}</td>
+                    <td>{{key[5]}}</td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
+
+
+{% endblock %}

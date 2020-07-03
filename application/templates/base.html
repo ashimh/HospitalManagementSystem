@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Greek Hospital</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="static/css/main1.css" />
+  <script src="/static/javascript/cities.js"></script>
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.min.css">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
+
+  
+  <style>
+      
+      input[type=text],
+      input[type=number],
+      select {
+        width: 100%;
+        height: 50%;
+        padding: 12px 20px;
+        margin: 5px 0;
+        display: inline-block;
+        box-sizing: border-box;
+
+      }
+
+      input[type=submit] {
+        width: auto;
+        padding: 12px 20px;
+        margin: 5px 0;
+        display: inline-block;
+        box-sizing: border-box;
+
+        background-color: #086972;
+        color: black;
+      }
+
+      label {
+        position: relative;
+        left: -20px;
+      }
+
+      table,
+      th,
+      td {
+        border-color: black;
+        border: 2px solid black;
+        text-align: center;
+      }
+
+      table {
+        border-color: black;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th {
+        height: 50px;
+        color: white;
+        background-color: darkslategray;
+      }
+
+      tr {
+
+        background-color: whitesmoke;
+      }
+      
+  </style>
+</head>
+
+<body style="background-color: #87dfd6;">
+
+
+  <script>
+    $(document).ready(function() {
+    $('#example').DataTable({
+      "pagingType": "simple_numbers"
+    });
+} );
+</script>
+  <div style="height:150px;background-color:#086972; min-width: 50%;;max-width: 100%; white-space: nowrap; font-weight:bolder">
+
+    <p style="font-size: 250%;padding:20px;font-weight:bold; text-align: center;"><span style="color:black;">Greek
+      </span> <span style="color:white;">Hospital </span></p>
+
+    <!--NavBar  -->
+
+    <nav class="navbar navbar-inverse"
+      style="background-color:#01a9b4; min-width: 100%;max-width: 100%;">
+      <div class="container-fluid">
+
+        <ul class="nav navbar-nav">
+
+          <li class="dropdown"><a class="dropdown-toggle" style="color: #1a1a1a; background: #01a9b4;" data-toggle="dropdown"
+              href="#">Patient <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/createPatient">Patient Registration</a></li>
+              <li><a href="/updatePatientInput">Update Patient</a></li>
+              <li><a href="/deletePatient">Delete Patient</a></li>
+              <li><a href="/viewPatient">View Patient Details</a></li>
+              <li><a href="/searchPatient">Search Patient</a></li>
+              <li><a href="/patient_billing_input">Patient Billing</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a class="dropdown-toggle" style=" background:#01a9b4;color: #1a1a1a;" data-toggle="dropdown"
+              href="#">Pharmacy<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="view_medicines_list">View Available medicines list</a></li>
+              <li><a href="issue_medicine_input">Issue Medicines to Patient</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a class="dropdown-toggle" style=" background:#01a9b4;color: #1a1a1a;" data-toggle="dropdown"
+              href="#">Diagonosis <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="view_diagnostics_list">View Available diagnosis list</a></li>
+              <li><a href="diagnosis_input">Add The diagnosis test to patient</a></li>
+            </ul>
+          </li>
+
+          <li class="dropdown"><a class="dropdown-toggle" style=" background:#01a9b4;color: #1a1a1a;" data-toggle="dropdown"
+            href="#">Manage stocks<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="add_medicine_to_stock_input">Add Medicines to database</a></li>
+            <li><a href="add_diagnostics_to_stock_input">Add diagnostics to database</a></li>
+            <li><a href="update_med_list_input">Update Medicine details</a></li>
+            <li><a href="update_diag_list_input">Update diagnostics details</a></li>
+          </ul>
+        </li>
+
+
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="http://localhost:5000/dropsession" style="color: #1a1a1a;">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+
+
+    
+
+  </div>
+  <div class="container-fluid">
+    {% block content%}
+  
+    {% endblock %}
+  </div>
+  <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+    {% if category == 'error' %}
+      <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">X</span></button>
+            {{message}}
+          </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">X</span></button>
+      {{message}}
+    </div>
+    {%endif%}
+    {% endfor %}
+  {% endif %}
+{% endwith %} -->
+  
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  {% with messages = get_flashed_messages(with_categories=true) %}  
+  {% if messages %}  
+        {% for category, message in messages %} 
+        {% if 'error' in category %}
+            
+              <script>
+                Swal.fire({
+                  icon:'error',
+                  title: 'Oops...',
+                  text: '{{message}}',
+                
+                })
+                 
+                
+              </script>
+              {% endif %}
+              {% if 'success' in category %}
+               
+   <script> 
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: '{{message}}',
+      showConfirmButton: false,
+      timer: 3000
+    })
+  </script>
+  {% endif %}
+  {% endfor %}  
+  {% endif %}  
+  {% endwith %}
+
+</body>

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid"  style="width: 800px;">
+  <h2>Issue Medicine </h2>
+  <form action="issue_medicine_action" method="POST">
+    <div class="container"  style="width: 500px;">
+      <label for="ID"><b>Patient ID</b><span class="required">*</span></label>
+      <input type="text" name="patient_id"  required maxlength="9"  pattern="\d{9}"  placeholder="Enter Patient ID">
+
+     <button type="submit" class="button">Get Details</button>
+
+    </div>
+    <form>
+
+</div>
+
+{% endblock %}

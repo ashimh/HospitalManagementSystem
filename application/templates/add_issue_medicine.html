@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <p style="text-align:center;font-size:200%;font-weight:bold">Pharmacy</p>
+    <div style="text-align:center">
+
+
+        <table class="table table-bordered" style="text-align:center;">
+
+            <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Address</th>
+                    <th>DOJ</th>
+                    <th>Type of Room</th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td><input type=" text " value="{{patient.patient_id}}" style="border: 0px none;"
+                            readonly="readonly" name="patient_id" id="patient_id" /></td>
+                    <td>{{patient.patient_name}}</td>
+                    <td>{{patient.age}}</td>
+                    <td>{{patient.address}}</td>
+
+                    <td>{{patient.date_of_joining}}</td>
+                    <td>{{patient.room_type}}</td>
+                </tr>
+
+
+            </tbody>
+        </table>
+
+
+    </div>
+
+    <p style="text-align:center;font-size:200%;font-weight:bold">Medicines Issued</p>
+    <div style="text-align:center">
+
+
+        <table class="table table-bordered" style="text-align:center;">
+
+            <thead>
+                <tr>
+                    <th>Medicine</th>
+                    <th>Quantity</th>
+                    <th>Rate</th>
+                    <th>Amount</th>
+
+
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% if  not temp_list  %}
+                <tr>
+                    <td colspan="4">
+                        <p style="font-size: larger;">No Medicine issued<br>To add medicine click on "Issue Medicine"
+                            button</p>
+                    </td>
+                </tr>
+                {% else %}
+
+                {% for data in temp_list %}
+                <tr>
+                    <td>{{data[1].medicine_name}}</td>
+                    <td>{{data[1].quantity}}</td>
+
+
+                    <td>{{data[0].rate}}</td>
+                    <td>{{data[0].rate * data[1].quantity}}</td>
+
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+
+    </div>
+    <p style="text-align:center;font-size:200%;font-weight:bold">Issue Medicines</p>
+    <div class="common" style="width:1040px; -overflow-x:scroll; padding: 5px 5px 0 5px;position:relative;left:50px">
+        <table id="maintable" width="50%" cellpadding="0" cellspacing="0" class="pdzn_tbl1">
+            <tr>
+                <th>Medicine</th>
+                <th>Quantity</th>
+                <th>Rate</th>
+                <th>Amount</th>
+            </tr>
+
+            <div id="addgroup">
+                <div id="add_div1"> </div>
+            </div>
+            <table>
+                <input type="button" name="add" value="+Add" id="addrows" />
+                <input type="hidden" id="hiddenprice" name="hiddenprice" value="3" />
+            </table>
+    </div>
+
+    <br> <br> <br>
+    <button type="submit" id="update" class="button"
+        style="width: 10%;text-align:center;left:500px;position:relative">Update</button>
+
+
+</div>
+
+<script>
+
+    let rowIndex = 0;
+    var count = 0;
+    $("#addrows").click(function () {
+
+        $('#maintable tr:last').after(`<tr>
+      <td><input type="text" name="medicine" required=required id="medicine${count}"${rowIndex++}"/></td>
+      <td><input type="number" name="quantity" required=required id="quantity${count}"${rowIndex++}"/></td>
+      <td> <input type="text" readonly ="readonly" name="rate" id="rate${count}"${rowIndex++}"/></td>
+      <td> <input type="text" readonly ="readonly" name="amount" id="amount${count}"${rowIndex++}"/></td>
+      <td> <input type="submit" value="search" id="search${count}"/></td>
+    </tr>`);
+        $("#addrows").hide();
+        $("#search" + count).click(function () {
+            $("#addrows").show();
+            medicine = $("#medicine" + (count - 1)).val();
+            quantity = $("#quantity" + (count - 1)).val();
+            $.ajax({
+                type: "POST",
+                url: "{{url_for('search_med')}}",
+                data: {
+                    "med_name": medicine,
+                    "quantity": quantity
+                },
+                success: function (response) {
+
+                    $("#rate" + (count - 1)).text(JSON.stringify(response)).val(JSON.stringify(response.rate));
+                    $("#amount" + (count - 1)).text(JSON.stringify(response)).val(JSON.stringify(response.amount));
+                },
+                error: function (request, status, message) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: request.responseJSON.message,
+
+                    })
+
+                }
+
+            });
+        });
+        count += 1;
+    });
+
+    var list = []
+    $("#update").click(function () {
+        var medicine, quantity, rate, amount;
+        var patient_id = $("#patient_id").val();
+
+
+        var list = [];
+        list.push(patient_id)
+        for (var i = 0; i < count; i++) {
+            medicine = $("#medicine" + i).val();
+            quantity = $("#quantity" + i).val();
+            rate = $("#rate" + i).val();
+            amount = $("#amount" + i).val();
+            list.push({ 'medicine_name': medicine, 'quantity': quantity, 'rate': rate, 'amount': amount })
+        }
+        console.log(list)
+        $.ajax({
+            type: "POST",
+            url: "{{url_for('add_issue_medicine_action')}}",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(list),
+            success: function (response) {
+                console.log("ok")
+                location.reload();
+
+            }
+        });
+    });
+
+</script>
+{% endblock %}

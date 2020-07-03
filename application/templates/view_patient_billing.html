@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <form action="discharge_patient" method="POST" style="border: none;">
+    <p style="text-align:center;font-size:200%;font-weight:bold">Patient Billing</p>
+    <div style="text-align:center">
+
+    <!--  -->
+        <table class="table table-bordered" style="text-align:center;">
+
+            <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Address</th>
+                    <th>DOJ</th>
+                    <th>Type of Room</th>
+                
+                </tr>
+            </thead>
+
+            <tbody>
+               
+                <tr>
+                    <td><input type=" text " value="{{patient.patient_id}}" style="border: 0px none;" readonly="readonly" name="patient_id"/></td>
+                    <td>{{patient.patient_name}}</td>
+                    <td>{{patient.age}}</td>
+                    <td>{{patient.address}}</td>
+                    
+                    <td>{{patient.date_of_joining}}</td>
+                    <td>{{patient.room_type}}</td>
+                </tr>
+               
+
+            </tbody>
+        </table>
+        
+        <p style="font-weight: bolder;">No. of days <span style="left:30px;position:relative;left:100px;">{{no_of_days}}</span> 
+            <span style="left:250px;position:relative">Bill for Room</span><span style="left:350px;position:relative">Rs.{{total_amount["room_charge"]}}</span>
+        </p>
+    </div>
+  <br><br>
+      
+
+    <p style="text-align:center;font-size:200%;font-weight:bold">Pharmacy Charges</p>
+    <div style="text-align:center">
+        
+        <table class="table table-bordered" style="text-align:center;">
+
+            <thead>
+                <tr>
+                    <th>Medicine</th>
+                    <th>Quantity</th>
+                    <th>Rate</th>
+                    <th>Amount</th>
+                    
+                
+                </tr>
+            </thead>
+            
+            <tbody>
+               
+                
+               
+                {% if  not temp_list  %}
+               <tr><td colspan="4"> <p style="font-size: larger;">No Medicine issued
+                {% else %}
+                {% set total_medicine_amt = {'val':0} %}
+                {% for data in temp_list %}
+                <tr>
+                    <td>{{data[1].medicine_name}}</td>
+                    <td>{{data[1].quantity}}</td>
+
+                    
+                    <td>Rs.{{data[0].rate}}</td>
+                    <td>Rs.{{data[0].rate * data[1].quantity}}</td>
+                
+                </tr>
+               {% endfor %}
+               
+               
+                {% endif %}
+            </tbody>
+        </table>
+        <p style="position: relative;left:200px;font-weight:bolder" >Bill for Pharmacy <span style="position: relative;left:169px">Rs. {{total_amount["medicine_charge"]}} </span> </p>
+        <br>
+        <p style="text-align:center;font-size:200%;font-weight:bold">Diagnosis Charges</p>
+
+        <table class="table table-bordered" style="text-align:center; width:400px;position:relative;left:365px; ">
+
+            <thead>
+                <tr>
+                    
+                    <th>Diagnosis Test Name</th>
+                    <th>Amount</th>
+                    
+                
+                </tr>
+            </thead>
+            
+            <tbody>
+               
+                
+                {% if  not diag_list  %}
+                    <tr>
+                        <td colspan="4">
+                            <p style="font-size: larger;">No Diagnosis Conducted </p>
+                               
+                        </td>
+                    </tr>
+
+                    {% else %}
+
+                    {% for data in diag_list %}
+                    <tr>
+                        
+                        <td>{{data[1].test_name}}</td>
+
+
+                        <td>Rs.{{data[0].charge}}</td>
+
+                    </tr>
+               {% endfor %}
+               
+               
+                {% endif %}
+            </tbody>
+        </table>
+        <p style="position: relative;left:-40px;font-weight:bolder" >Bill for Diagnostics <span style="position: relative;left:105px">Rs.{{total_amount["diag_charge"]}} </span> </p>
+        <br>
+        <br><br>
+        <p style="font-weight: bolder;position:relative;left:-40px;text-align:center;font-size:larger">Grand Total <span style="position:relative;left:100px">{{total_amount["grand_total"]}}</span></p>
+        <br>
+        <button type="submit"  class="button" style="width: 20%;">Confirm</button>
+   
+    </div>
+
+</form>
+
+</div>
+
+
+{% endblock %}

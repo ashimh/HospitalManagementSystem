@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+
+    <p style="text-align:center;font-size:200%;font-weight:bold">Diagnostics</p>
+    <div style="text-align:center">
+
+
+        <table class="table table-bordered" style="text-align:center;">
+
+            <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Address</th>
+                    <th>DOJ</th>
+                    <th>Type of Room</th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td><input type=" text " value="{{patient.patient_id}}" style="border: 0px none;"
+                            readonly="readonly" name="pid" id="patient_id" /></td>
+                    <td>{{patient.patient_name}}</td>
+                    <td>{{patient.age}}</td>
+                    <td>{{patient.address}}</td>
+
+                    <td>{{patient.date_of_joining}}</td>
+                    <td>{{patient.room_type}}</td>
+                </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+    <p style="text-align:center;font-size:200%;font-weight:bold">Diagnosis Conducted</p>
+    <div style="text-align:center">
+
+        <table class="table table-bordered" style="text-align:center;">
+
+            <thead>
+                <tr>
+                    <th>Diagnosis ID</th>
+                    <th>Diagnosis Test Name</th>
+                    <th>Amount</th>
+
+
+                </tr>
+            </thead>
+
+            <tbody>
+
+
+
+                {% if  not temp_list  %}
+                <tr>
+                    <td colspan="4">
+                        <p style="font-size: larger;">No Diagnosis Conducted<br>To add diagnosis test click on "Add
+                            Diagnosis" button</p>
+                    </td>
+                </tr>
+
+                {% else %}
+
+                {% for data in temp_list %}
+                <tr>
+                    <td>{{data[1].test_id}}</td>
+                    <td>{{data[1].test_name}}</td>
+
+
+                    <td>{{data[0].charge}}</td>
+
+                </tr>
+                {% endfor %}
+
+
+                {% endif %}
+            </tbody>
+        </table>
+
+        <div>
+            <p style="text-align:center;font-size:200%;font-weight:bold">Add Diagnostics</p>
+            <table id="maintable" cellpadding="0" cellspacing="0" class="table table-bordered">
+                <thead>
+                    <th>Diagnosis Name</th>
+                    <th>Amount</th>
+                </thead>
+
+                <tbody>
+
+                    <input type="button" name="add" value="+Add new diagnostics" id="addrows" style=" align-content: flex-start;" />
+                    <input type="hidden" id="hiddenprice" name="hiddenprice" value="3" />
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+    <button type="submit" id="update" class="button"
+        style="width: 10%;text-align:center;left:500px;position:relative">Update</button>
+
+
+
+
+
+</div>
+
+<script>
+
+    let rowIndex = 0;
+    var count = 0;
+    
+    $("#addrows").click(function () {
+
+        $('#maintable tr:last').after(` 
+        <tr><td>
+            {% if not diag_store %}
+        <div class="alert alert-danger alert-dismissible" role="alert" >
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+           
+            No Tests Available in the database to Add
+            <a href="{{url_for('diagnosis_input')}}"><button class="button">Go Back</button></a>
+
+          </div>
+            {% else %}
+                <input type="hidden" value="{{patient.patient_id}}" style="border: 0px none;"
+                            name="pid" />
+                <select name="t_name" class="op" required aria-required="true" id="diagnosis${count}"${rowIndex++}">
+                    <option value="">Select a Diagnosis</option>
+                    
+                    {% for key in diag_store %}
+                   
+                    <option value="{{key.test_name}}|{{key.charge}}">{{key.test_name}}</option>
+                    {% endfor %}
+        
+        {% endif %}</td>
+    <td><input type="text" readonly ="readonly" name="amount" id="amount${count}"${rowIndex++}"/></td>
+    <td> <input type="submit" value="Find Cost and Add" id="addtolist${count}"/></td>
+    </tr>`);
+
+    // sel = $('.op :selected').text();
+    // newS = sel.split("|")
+    $(".op").chosen();
+        $("#addrows").hide();
+
+        $("#addtolist" + count).click(function () {
+
+            $("#addrows").show();
+
+
+            value_ = $("#diagnosis" + (count - 1)).val();
+            diagn = value_.split("|");
+
+            diagnosis = diagn[0];
+            amount = diagn[1];
+
+            $("#amount" + (count - 1)).val(amount);
+           
+
+        });
+        count += 1;
+    });
+
+    
+    var list = []
+        $("#update").click(function () {
+            
+        var diagnosis, amount;
+        var patient_id = $("#patient_id").val();
+
+
+        var list = [];
+        list.push(patient_id)
+        for (var i = 0; i < count; i++) {
+            diagnosis = $("#diagnosis" + i).val();
+            d_n = diagnosis.split("|");
+            amount = $("#amount" + i).val();
+            list.push({ 'diagnosis_name': d_n[0], 'amount': amount })
+        }
+        console.log(list)
+        $.ajax({
+            type: "POST",
+            url: "{{url_for('add_diagnosis_action1')}}",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(list),
+            success: function (response) {
+                console.log("ok")
+                location.reload();
+
+            }
+        });
+    });
+        
+    
+    
+</script>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid" style="width: 800px;">
+ 
+  <p style="text-align:center;font-size:200%;font-weight:bold">Update Patient Details</p>
+  <form method="POST" action="/update_action">
+    <div class="container" style="width: 500px;">
+      <label for="SSNID"><b>Patient ID: {{data[0]}}</b><span class="required">*</span></label>
+      <input type="hidden" name="id" value="{{data[0]}}" >
+      <br>
+
+      <label for="pn"><b>Patient Name</b></label>
+      <input type="text" name="patient_name" value="{{data[1]}}" required=required>
+
+      <label for="age"><b>Patient Age</b></label>
+      <input type="number" value="{{data[2]}}" min="1" max="180" placeholder="Enter Patient Age" name="age"  onKeyPress="if(this.value.length==3) return false;"  required=required />
+    
+      <!-- <input type="number" max="99" min="18" name="age" value="{{data[2]}}"> -->
+
+      <label for="DOA"><b>Date of Admission</b></label>
+      <input type="date" name="doj" value="{{data[3]}}" required=required>
+
+      <label for="TOB"><b>Type of Bed *</b></label>
+      <select name="tob" id="tob" required>
+        <option value="">{{data[4]}}</option>
+        <option value="General ward">General Ward</option>
+        <option value="Semi sharing">Semi Sharing</option>
+        <option value="Single Room">Single Room</option>
+      </select>
+
+      <label for="addr"><b>Address</b></label>
+      <input type="text" name="address" value="{{data[5]}}" required=required>
+
+      <label for="pass1">State *</label>
+      <select onchange="print_city('state', this.selectedIndex);" id="sts" name="state"   required=required>
+        <option value=""></option>
+      </select>
+
+      <label class="text-black" for="pass1">City *</label>
+      <select id="state" name="city" required=required></select>
+      <script language="javascript">print_state("sts");</script>
+
+      <span>(*) Mandatory</span>
+
+      <button type="submit" class="button">Update</button>
+      <a href="{{url_for('update_patient_input')}}"><button class="button" type="button">Cancel</button></a>
+       
+
+    </div>
+    <form>
+
+</div>
+
+{% endblock %}

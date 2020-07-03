@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid"  style="width: 800px;">
+
+  
+  <h2>Add new Medicines to stock</h2>
+  <form method="post" action="added_medicine">
+    <div class="container"  style="width: 500px;">
+        <div class="form-group">
+            <label for="add"><b>Enter the new Medicine name</b><span>*</span></label>
+    
+            <input type="text" name="med_name" required=required  maxlength="25"  placeholder="Enter Medicine name" />
+      
+        </div>
+      
+        <div class="form-group">
+            <label for="cost"><b>Enter the cost of Medicine</b><span>*</span></label>
+    
+      <input type="number" name="charge" required aria-required="true" placeholder="Enter Cost of the Medicine">
+
+        </div>
+
+        <div class="form-group">
+            <label for="q"><b>Enter the quantity of Medicine</b><span>*</span></label>
+    
+      <input type="number" name="q" required aria-required="true" placeholder="Enter the quantity(units ex:100)">
+
+        </div>
+      
+      <span>(*) Mandatory</span>
+      
+    <button class="button">Upload</button>
+    
+    </div>
+  </form>
+
+</div>
+{% endblock %}

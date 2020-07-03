@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <form action="/add_diagnosis_to_view" method="POST" style="border: none;">
+        <p style="text-align:center;font-size:200%;font-weight:bold">Diagnostics</p>
+        <div style="text-align:center">
+
+
+            <table class="table table-bordered" style="text-align:center;">
+
+                <thead>
+                    <tr>
+                        <th>Patient ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Address</th>
+                        <th>DOJ</th>
+                        <th>Type of Room</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td><input type=" text " value="{{patient.patient_id}}" style="border: 0px none;"
+                                readonly="readonly" name="pid" /></td>
+                        <td>{{patient.patient_name}}</td>
+                        <td>{{patient.age}}</td>
+                        <td>{{patient.address}}</td>
+
+                        <td>{{patient.date_of_joining}}</td>
+                        <td>{{patient.room_type}}</td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+        <p style="text-align:center;font-size:200%;font-weight:bold">Diagnosis Conducted</p>
+        <div style="text-align:center">
+
+            <table class="table table-bordered" style="text-align:center;">
+
+                <thead>
+                    <tr>
+                        <th>Diagnosis ID</th>
+                        <th>Diagnosis Test Name</th>
+                        <th>Amount</th>
+
+
+                    </tr>
+                </thead>
+
+                <tbody>
+
+
+
+                    {% if  not temp_list  %}
+                    <tr>
+                        <td colspan="4">
+                            <p style="font-size: larger;">No Diagnosis Conducted<br>To add diagnosis test click on "Add
+                                Diagnosis" button</p>
+                        </td>
+                    </tr>
+
+                    {% else %}
+
+                    {% for data in temp_list %}
+                    <tr>
+                        <td>{{data[1].test_id}}</td>
+                        <td>{{data[1].test_name}}</td>
+
+
+                        <td>{{data[0].charge}}</td>
+
+                    </tr>
+                    {% endfor %}
+
+
+                    {% endif %}
+                </tbody>
+            </table>
+
+            <button type="submit" class="button" style="width: 20%;">Add Diagnosis Test</button>
+
+        </div>
+    </form>
+
+</div>
+
+
+{% endblock %}

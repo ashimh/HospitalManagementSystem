@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container"  style="width: 800px;">
+
+
+  
+
+    <p style="text-align:center;font-size:200%;font-weight:bold">DeletePatient </p>
+      <form method="POST" action="deleteAction" style="width: inherit;">
+
+        <div class="container" style="text-align: center; width: inherit;"  >
+          <label for="SSNID"><b>Patient ID</b><span class="required">*</span></label>
+    
+          <input type="text" name="pid" required=required  maxlength="9"  pattern="\d{9}"  placeholder="Enter 9 digit Patient ID" />
+    
+          <span>(*) Mandatory</span>
+          
+          <button class="button">Get</button>
+          
+          
+          </div>
+          <div class="container" style="text-align: center; width: inherit;" >
+            <table class="table table-bordered" style="text-align:center;">
+  
+              <tbody>
+                  
+                  <tr class="active">
+                      <td>Patient Id</td>
+                      <td>{{data[0]}}</td>
+                  </tr>
+                  <tr class="info">
+                    <td>Patient SSN Id</td>
+                    <td>{{data[2]}}</td>
+                  </tr>
+                  <tr class="active">
+                    <td>Patient Name</td>
+                    <td>{{data[1]}}</td>
+                  </tr>
+                  <tr class="info">
+                    <td>Patient Age</td>
+                    <td>{{data[3]}}</td>
+                </tr>
+                <tr class="active">
+                  <td>Patient Room Type</td>
+                  <td>{{data[4]}}</td>
+                </tr>
+                <tr class="info">
+                  <td>Address</td>
+                  <td>{{data[5]}}</td>
+                </tr>
+
+                <tr class="active">
+                  <td>State</td>
+                  <td>{{data[6]}}</td>
+              </tr>
+              <tr class="info">
+                <td>City</td>
+                <td>{{data[7]}}</td>
+              </tr>
+              <tr class="active">
+                <td>Date of joining</td>
+                <td>{{data[8]}}</td>
+              </tr>
+
+  
+              </tbody>
+          </table>
+  
+          <a href="{{url_for('deleted_action', id=data[0])}}"><button class="button" type="button">Delete</button></a>
+        
+    </form>  
+    
+
+</div>
+{% endblock %}

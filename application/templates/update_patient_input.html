@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid"  style="width: 800px;">
+  <p style="text-align:center;font-size:200%;font-weight:bold">Update Patient Details</p>
+
+  <form action="updatePatient">
+    <div class="container"  style="width: 500px;">
+      <label for="SSNID"><b>Patient ID</b><span class="required">*</span></label>
+      <!-- <input type="number" name="patient_id" span required>*</span> -->
+
+      <input type="text" name="patient_id" required=required  maxlength="9"  pattern="\d{9}"  placeholder="Enter 9 digit Patient ID" />
+
+
+     <button type="submit" class="button">Get Details</button>
+
+    </div>
+    <form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="container-fluid" style="width: 800px;">
+
+  <p style="text-align:center;font-size:200%;font-weight:bold">Patient Registration </p>
+<form method="POST" action="create_patient_action">
+  <div class="container" style="width: 500px;">
+
+    <label for="SSNID"><b>Patient SSN ID</b><span class="required">*</span></label>
+    <!-- <input type="number" name="ssn" placeholder="Enter Patients SSN ID" required> -->
+    <input type="text" name="ssn" required=required  maxlength="9"  pattern="\d{9}"  placeholder="Enter Patients SSN ID" />
+
+
+    <label for="pn"><b>Patient Name</b><span class="required">*</span></label>
+    <!-- <input type="text" name="patient_name" placeholder="Enter Patients Name" required> -->
+    <input placeholder="Enter patient Name" type="text" name="patient_name" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" required=required />
+
+    <label for="age"><b>Patient Age</b><span class="required">*</span></label>
+    <!-- <input type="number" max="99" min="18" name="age" placeholder="Enter Patients Age" required> -->
+    <input type="number" min="1" max="180" placeholder="Enter Patient Age" name="age"  onKeyPress="if(this.value.length==3) return false;"  required=required />
+    
+    <label for="DOA"><b>Date of Admission</b><span class="required">*</span></label>
+    <input type="date" name="admission_date" required>
+
+    <label for="TOB"><b>Type of Bed</b><span class="required">*</span></label>
+    <select name="bed_type" id="tob" required>
+      <option value="">Select</option>
+      <option value="General ward">General Ward</option>
+      <option value="Semi sharing">Semi Sharing</option>
+      <option value="Single Room">Single Room</option>
+    </select>
+
+    <label for="addr"><b>Address</b></label>
+    <input type="text" name="address" >
+
+    <label for="pass1">State *</label>
+    <select onchange="print_city('state', this.selectedIndex);" id="sts" name="state" required></select>
+
+    <label class="text-black" for="pass1">City *</label>
+    <select id="state" name="city" required></select>
+    <script language="javascript">print_state("sts");</script>
+
+    <span>(*) Mandatory</span>
+    <button type="submit" class="button">Submit</button>
+    <br><br>
+    <button type="reset" class="button">Reset</button>
+
+  </div>
+<form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid" style="width: 500px;">
+
+    <p style="text-align:center;font-size:200%;font-weight:bold">Update Diagnostics Details</p>
+
+    <form action="update_diag_list_view"  style="width: inherit;">
+
+        <div class="container" style="text-align: center; width: inherit;">
+            {% if not diag_store %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+
+                No Tests Available in the database to Add
+                <a href="{{url_for('update_diag_list_input')}}"><button class="button">Go Back</button></a>
+
+            </div>
+            {% else %}
+
+            <select class="livesearch" name="t_name"  required=required aria-required="true" style="width:400px;">
+
+
+                <option value="">Select a Diagnosis to Update</option>
+
+                {% for key in diag_store %}
+
+                <option value="{{key.test_name}}">{{key.test_name}}</option>
+                {% endfor %}
+
+            </select>
+            {% endif %}
+
+            <input type="submit" class="button" value="submit">
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(".livesearch").chosen();
+</script>
+
+{% endblock %}

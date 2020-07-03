@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <p style="text-align:center;font-size:200%;font-weight:bold">View Medicines List</p>
+    <div style="text-align:center">
+
+    
+        <table id="example" class="table table-striped table-bordered table-sm" style="text-align:center; width: 100%;">
+
+            <thead>
+                <tr>
+                    <th>Medicine Name</th>
+                    <th>Cost(per unit)</th>
+                    <th>Available quantity</th>
+                    
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for key in data %}
+                <tr>
+                    <td>{{key.medicine_name}}</td>
+                    <td>{{key.rate}}</td>
+                    <td>{{key.quantity}}</td>
+                   
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}
