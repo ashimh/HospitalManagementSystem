@@ -53,7 +53,7 @@ PyMySQL==0.9.3
 python-dotenv==0.13.0
 pyttsx3==2.81
 pytz==2020.1
-#pywin32==228
+pywin32==228
 pywin32-ctypes==0.2.0
 requests==2.24.0
 six==1.15.0
