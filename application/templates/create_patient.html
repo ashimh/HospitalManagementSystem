@@ -2,7 +2,7 @@
 {% block content %}
 
 
-<div class="container-fluid" style="width: 800px;">
+<div class="container" style="width: 800px;">
 
   <p style="text-align:center;font-size:200%;font-weight:bold">Patient Registration </p>
 <form method="POST" action="create_patient_action">
@@ -23,7 +23,8 @@
     
     <label for="DOA"><b>Date of Admission</b><span class="required">*</span></label>
     <input type="date" name="admission_date" required>
-
+    <br>
+    <br>
     <label for="TOB"><b>Type of Bed</b><span class="required">*</span></label>
     <select name="bed_type" id="tob" required>
       <option value="">Select</option>

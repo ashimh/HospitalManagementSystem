@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="container-fluid" style="width: 800px;">
+<div class="container" style="width: 800px;">
  
   <p style="text-align:center;font-size:200%;font-weight:bold">Update Patient Details</p>
   <form method="POST" action="/update_action">
@@ -21,6 +21,7 @@
       <label for="DOA"><b>Date of Admission</b></label>
       <input type="date" name="doj" value="{{data[3]}}" required=required>
 
+      <br><br>
       <label for="TOB"><b>Type of Bed *</b></label>
       <select name="tob" id="tob" required>
         <option value="">{{data[4]}}</option>
