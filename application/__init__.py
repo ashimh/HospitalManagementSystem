@@ -8,7 +8,7 @@ from config import Config
 
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = os.environ.get('SECRET')
 app.config.from_object(Config)
 
 db=SQLAlchemy(app)

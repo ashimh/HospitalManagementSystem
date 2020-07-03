@@ -786,3 +786,7 @@ def update_list_med_action():
         flash("Not updated", "error")
         return redirect(url_for('update_list_med_input'))
     return redirect(url_for('login'))
+
+
+if __name__ == "__main__":
+    app.run()
