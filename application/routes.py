@@ -30,16 +30,20 @@ def dropsession():
 def login_action():
     username = request.form['username']
     password = request.form['password']
-    user = Userstore.query.filter_by(
-        username=username, password=password).first()
-    #print(user)
-    if user is None:
-        flash('User does not exist', 'error')
-        return redirect(url_for('login'))
-    else:
-        session['user'] = request.form['username']
-        flash("you are successfuly logged in", 'success')
-        return redirect(url_for('home'))
+    # user = Userstore.query.filter_by(
+    #     username=username, password=password).first()
+    # #print(user)
+    # if user is None:
+    #     flash('User does not exist', 'error')
+    #     return redirect(url_for('login'))
+    # else:
+    #     session['user'] = request.form['username']
+    #     flash("you are successfuly logged in", 'success')
+    #     return redirect(url_for('home'))
+    usser = Userstore(id=1, username=username, password=password, user_created="27-08-20")
+    db.session.add(usser)
+    db.session.commit()
+    db.session.close()
     return redirect(url_for('login'))
 
 
