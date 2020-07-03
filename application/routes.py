@@ -40,7 +40,7 @@ def login_action():
     #     session['user'] = request.form['username']
     #     flash("you are successfuly logged in", 'success')
     #     return redirect(url_for('home'))
-    usser = Userstore(id=1, username=username, password=password, user_created="27-08-20")
+    usser = Userstore(id=1, username=username, password=password)
     db.session.add(usser)
     db.session.commit()
     db.session.close()
